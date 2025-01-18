@@ -35,9 +35,6 @@ export default function Navbar() {
               <Link href="/search" className="text-sm text-zinc-300 hover:text-white transition-colors">
                 Search
               </Link>
-              <Link href="/account" className="text-sm text-zinc-300 hover:text-white transition-colors">
-                Account
-              </Link>
               <Link href="/new-arrivals" className="text-sm text-zinc-300 hover:text-white transition-colors">
                 New Arrivals
               </Link>
