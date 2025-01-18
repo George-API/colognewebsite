@@ -2,20 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 98%;
+    --foreground: 0 0% 10%;
+    --paper: 0 0% 100%;
+  }
+
+  body {
+    @apply bg-[#fafafa] text-foreground antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight text-zinc-900;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn-primary {
+    @apply bg-zinc-900 text-white px-8 py-3 hover:bg-black transition duration-200;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-zinc-900 border border-zinc-200 px-8 py-3 hover:bg-zinc-50 transition duration-200;
+  }
+
+  .input {
+    @apply w-full px-4 py-3 border border-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-900 transition duration-200;
+  }
+
+  .nav-link {
+    @apply text-sm text-zinc-300 hover:text-white transition-colors;
+  }
+
+  .paper {
+    @apply bg-white shadow-sm;
+  }
+
+  .product-card-container {
+    @apply cursor-pointer;
+  }
+
+  .product-image-container {
+    @apply relative aspect-[3/4] overflow-hidden bg-[#f5f5f5];
+  }
+
+  .product-image-container img {
+    @apply object-cover transition duration-500;
+  }
+
+  .group:hover .product-image-container img {
+    @apply scale-105;
+  }
+
+  .product-title {
+    @apply font-medium text-lg mt-4 text-zinc-900;
+  }
+
+  .product-price {
+    @apply text-lg text-zinc-900;
+  }
 }
