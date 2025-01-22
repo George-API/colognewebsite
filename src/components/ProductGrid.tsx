@@ -6,7 +6,29 @@ import { FilterList } from '@mui/icons-material'
 import ProductCard from './ProductCard'
 import ProductFilters from './ProductFilters'
 import ProductSort, { SortOption } from './ProductSort'
-import { Product } from '@prisma/client'
+
+interface Product {
+  id: string
+  name: string
+  brand: string
+  price: number
+  size: string
+  category: string
+  description: string
+  image: string
+  images?: string[]
+  stock: number
+  featured: boolean
+  createdAt: Date
+}
+
+interface FilterState {
+  priceRange: [number, number]
+  brands: string[]
+  categories: string[]
+  sizes: string[]
+  search: string
+}
 
 interface ProductGridProps {
   products: Product[]
@@ -18,7 +40,7 @@ export default function ProductGrid({ products, isLoading = false }: ProductGrid
   const [currentSort, setCurrentSort] = React.useState<SortOption>('featured')
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = React.useState(false)
 
-  const handleFilterChange = (filters: any) => {
+  const handleFilterChange = (filters: FilterState) => {
     let result = [...products]
 
     // Apply search filter
@@ -58,11 +80,6 @@ export default function ProductGrid({ products, isLoading = false }: ProductGrid
       result = result.filter(product =>
         filters.sizes.includes(product.size)
       )
-    }
-
-    // Apply in stock filter
-    if (filters.inStock) {
-      result = result.filter(product => product.stock > 0)
     }
 
     // Apply sorting

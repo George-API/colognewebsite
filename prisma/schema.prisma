@@ -6,11 +6,13 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"] // Enable for better serverless performance
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL") // Used for migrations
 }
 
 model Account {
@@ -30,6 +32,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -38,6 +41,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -54,6 +59,8 @@ model User {
   reviews       Review[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  @@index([email])
 }
 
 model VerificationToken {
@@ -64,36 +71,52 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+// @validation: price >= 0
+// @validation: stock >= 0
 model Product {
   id            String    @id @default(cuid())
   name          String
   brand         String
-  description   String
-  price         Float
+  description   String    @db.Text
+  price         Float     @db.DoublePrecision  // Using DoublePrecision for more accurate pricing
   size          String    // e.g., "50ml", "100ml"
   stock         Int       @default(0)
-  images        String[]  // Array of image URLs
+  mainImage     String    // Main product image
+  imageGallery  String[]  // Additional images (keep limited)
   category      String
   featured      Boolean   @default(false)
   reviews       Review[]
   orderItems    OrderItem[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  @@index([category])
+  @@index([featured])
 }
 
+// @validation: total >= 0
 model Order {
-  id            String    @id @default(cuid())
-  user          User      @relation(fields: [userId], references: [id])
-  userId        String
-  items         OrderItem[]
-  status        OrderStatus @default(PENDING)
-  total         Float
+  id              String        @id @default(cuid())
+  user            User          @relation(fields: [userId], references: [id])
+  userId          String
+  items           OrderItem[]
+  status          OrderStatus   @default(PENDING)
+  paymentStatus   PaymentStatus @default(PENDING)
+  subtotal        Float         @db.DoublePrecision
+  tax             Float?        @db.DoublePrecision
+  shipping        Float?        @db.DoublePrecision
+  total           Float         @db.DoublePrecision
   shippingAddress String
   paymentIntentId String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([userId, status])
+  @@index([paymentStatus])
 }
 
+// @validation: quantity > 0
+// @validation: price >= 0
 model OrderItem {
   id          String    @id @default(cuid())
   order       Order     @relation(fields: [orderId], references: [id])
@@ -101,19 +124,26 @@ model OrderItem {
   product     Product   @relation(fields: [productId], references: [id])
   productId   String
   quantity    Int
-  price       Float     // Price at time of purchase
+  price       Float     @db.DoublePrecision
+
+  @@index([orderId])
+  @@index([productId])
 }
 
+// @validation: rating >= 1 AND rating <= 5
 model Review {
   id          String    @id @default(cuid())
-  rating      Int       // 1-5 stars
-  comment     String?
+  rating      Int       @db.SmallInt
+  comment     String?   @db.Text
   user        User      @relation(fields: [userId], references: [id])
   userId      String
   product     Product   @relation(fields: [productId], references: [id])
   productId   String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+  @@index([productId])
+  @@index([userId])
 }
 
 enum Role {
@@ -127,4 +157,11 @@ enum OrderStatus {
   SHIPPED
   DELIVERED
   CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
 }

@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ShoppingCart } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
 
@@ -14,30 +15,32 @@ export default function Navbar() {
         <div className="relative px-4 sm:px-6 lg:px-8">
           <div className="h-16 flex items-center justify-between">
             <div className="flex items-center gap-8">
-              <Link href="/" className="text-white font-medium">
-                COLOGNE
+              <Link href="/" className="flex items-center gap-2">
+                <Image
+                  src="/images/decant-logo-final.png"
+                  alt="Decant Labs"
+                  width={35}
+                  height={12}
+                  priority
+                  className="opacity-90"
+                />
+                <span className="text-white text-lg">Decant Labs</span>
               </Link>
 
               <div className="hidden md:flex items-center gap-6">
-                <Link href="/products" className="text-sm text-zinc-300 hover:text-white transition-colors">
-                  All Products
+                <Link href="/fragrances" className="text-sm text-zinc-300 hover:text-white transition-colors">
+                  Fragrances
                 </Link>
                 <Link href="/brands" className="text-sm text-zinc-300 hover:text-white transition-colors">
                   Brands
                 </Link>
-                <Link href="/categories" className="text-sm text-zinc-300 hover:text-white transition-colors">
-                  Categories
+                <Link href="/about" className="text-sm text-zinc-300 hover:text-white transition-colors">
+                  About
                 </Link>
               </div>
             </div>
 
             <div className="flex items-center gap-6">
-              <Link href="/search" className="text-sm text-zinc-300 hover:text-white transition-colors">
-                Search
-              </Link>
-              <Link href="/new-arrivals" className="text-sm text-zinc-300 hover:text-white transition-colors">
-                New Arrivals
-              </Link>
               <Link href="/cart" className="relative text-white">
                 <ShoppingCart className="h-5 w-5" />
                 {cartState.items.length > 0 && (

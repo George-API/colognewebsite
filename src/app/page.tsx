@@ -39,29 +39,18 @@ export default function Home() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20">
-        <div className="absolute inset-0">
-          <Image
-            src="/hero-cologne.jpg"
-            alt="Luxury cologne bottle"
-            fill
-            className="object-cover object-center brightness-[0.95] contrast-[1.02]"
-            priority
-          />
-          <div className="absolute inset-0 bg-[#fafafa]/80" />
-        </div>
-        
+      <section className="relative min-h-[80vh] flex items-center justify-center pt-20">
         <div className="relative text-center space-y-10 max-w-6xl mx-auto px-4">
           <h1 className="text-[9rem] leading-[0.9] font-bold text-zinc-900">
-            <span className="block">REFINED</span>
-            <span className="block">ESSENCE</span>
+            <span className="block">Decant</span>
+            <span className="block">Labs</span>
           </h1>
           <p className="text-2xl font-light tracking-wide max-w-2xl mx-auto text-zinc-600">
             Discover our collection of timeless fragrances
           </p>
           <div className="flex gap-6 justify-center pt-6">
             <Link
-              href="/products"
+              href="/fragrances"
               className="bg-zinc-900 text-white px-12 py-4 text-sm tracking-wider hover:bg-black transition-colors"
             >
               VIEW COLLECTION
@@ -81,7 +70,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {featuredProducts.map((product) => (
-            <Link key={product.id} href={`/products/${product.id}`} className="group product-card-container">
+            <Link key={product.id} href={`/fragrances/${product.id}`} className="group product-card-container">
               <div className="product-image-container">
                 <Image
                   src={product.image}

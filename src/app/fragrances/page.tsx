@@ -3,7 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import Navbar from '../../components/Navbar'
+import Navbar from '@/components/Navbar'
 import { Filter } from 'lucide-react'
 import { Button, Drawer } from '@mui/material'
 import ProductFilters from '@/components/ProductFilters'
@@ -14,7 +14,6 @@ interface FilterState {
   brands: string[]
   categories: string[]
   sizes: string[]
-  inStock: boolean
   search: string
 }
 
@@ -24,7 +23,7 @@ const products = [
     name: 'Aventus',
     brand: 'Creed',
     price: 435,
-    size: '100ml',
+    size: '10ml',
     category: 'Fruity & Rich',
     description: 'Pineapple, Birch, Ambergris, Black Currant',
     image: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=800&auto=format&fit=crop&q=80',
@@ -36,7 +35,7 @@ const products = [
     name: 'Oud Wood',
     brand: 'Tom Ford',
     price: 399,
-    size: '100ml',
+    size: '5ml',
     category: 'Woody & Spicy',
     description: 'Rare Oud Wood, Sandalwood, Chinese Pepper',
     image: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=800&auto=format&fit=crop&q=80',
@@ -48,76 +47,16 @@ const products = [
     name: 'Baccarat Rouge 540',
     brand: 'Maison Francis Kurkdjian',
     price: 495,
-    size: '70ml',
+    size: '1ml',
     category: 'Sweet & Amber',
     description: 'Saffron, Jasmine, Cedar, Ambergris',
     image: 'https://images.unsplash.com/photo-1592914610354-fd354ea45e48?w=800&auto=format&fit=crop&q=80',
     stock: 8,
     featured: true,
-  },
-  {
-    id: 4,
-    name: 'Black Phantom',
-    brand: 'Kilian',
-    price: 485,
-    size: '50ml',
-    category: 'Gourmand',
-    description: 'Rum, Coffee, Sugar Cane, Dark Chocolate',
-    image: 'https://images.unsplash.com/photo-1587017539504-67cfbddac569?w=800&auto=format&fit=crop&q=80',
-    stock: 3,
-    featured: false,
-  },
-  {
-    id: 5,
-    name: 'Layton',
-    brand: 'Parfums de Marly',
-    price: 335,
-    size: '125ml',
-    category: 'Fresh & Spicy',
-    description: 'Bergamot, Lavender, Vanilla, Geranium',
-    image: 'https://images.unsplash.com/photo-1619994403073-2cec844b8e63?w=800&auto=format&fit=crop&q=80',
-    stock: 7,
-    featured: true,
-  },
-  {
-    id: 6,
-    name: 'Reflection Man',
-    brand: 'Amouage',
-    price: 445,
-    size: '100ml',
-    category: 'Fresh & Floral',
-    description: 'Rosemary, Jasmine, Neroli, Sandalwood',
-    image: 'https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=800&auto=format&fit=crop&q=80',
-    stock: 2,
-    featured: false,
-  },
-  {
-    id: 7,
-    name: 'Side Effect',
-    brand: 'Initio',
-    price: 395,
-    size: '90ml',
-    category: 'Sweet & Tobacco',
-    description: 'Tobacco, Vanilla, Rum, Cinnamon',
-    image: 'https://images.unsplash.com/photo-1524638067-feba7e8ed70f?w=800&auto=format&fit=crop&q=80',
-    stock: 6,
-    featured: true,
-  },
-  {
-    id: 8,
-    name: '40 Knots',
-    brand: 'Xerjoff',
-    price: 475,
-    size: '100ml',
-    category: 'Fresh & Woody',
-    description: 'Sea Notes, Cedar, Ambergris, Musk',
-    image: 'https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?w=800&auto=format&fit=crop&q=80',
-    stock: 4,
-    featured: false,
   }
 ]
 
-export default function ProductsPage() {
+export default function FragrancesPage() {
   const [filteredProducts, setFilteredProducts] = React.useState(products)
   const [currentSort, setCurrentSort] = React.useState<SortOption>('featured')
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = React.useState(false)
@@ -164,11 +103,6 @@ export default function ProductsPage() {
       )
     }
 
-    // Apply in stock filter
-    if (filters.inStock) {
-      result = result.filter(product => product.stock > 0)
-    }
-
     // Apply current sort
     result = sortProducts(result, currentSort)
 
@@ -204,7 +138,7 @@ export default function ProductsPage() {
       <div className="max-w-7xl mx-auto px-4 py-24">
         <div className="flex items-center justify-between mb-12">
           <div>
-            <h1 className="text-3xl font-light mb-2">All Fragrances</h1>
+            <h1 className="text-3xl font-light mb-2">Our Fragrances</h1>
             <p className="text-zinc-500">Discover our curated collection of luxury fragrances</p>
           </div>
           
@@ -245,7 +179,7 @@ export default function ProductsPage() {
           <div className="flex-1">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
               {filteredProducts.map((product) => (
-                <Link key={product.id} href={`/products/${product.id}`} className="group">
+                <Link key={product.id} href={`/fragrances/${product.id}`} className="group">
                   <div className="aspect-square bg-zinc-50 relative mb-4 overflow-hidden rounded-lg">
                     <Image
                       src={product.image}

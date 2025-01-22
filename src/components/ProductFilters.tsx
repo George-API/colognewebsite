@@ -25,7 +25,6 @@ interface FilterState {
   brands: string[]
   categories: string[]
   sizes: string[]
-  inStock: boolean
   search: string
 }
 
@@ -34,13 +33,12 @@ const INITIAL_FILTERS: FilterState = {
   brands: [],
   categories: [],
   sizes: [],
-  inStock: false,
   search: '',
 }
 
 const BRANDS = ['Tom Ford', 'Creed', 'Le Labo', 'Maison Francis Kurkdjian', 'Byredo']
 const CATEGORIES = ['Niche', 'Designer', 'Vintage', 'Limited Edition']
-const SIZES = ['2ml', '5ml', '10ml', '30ml', '50ml', '100ml']
+const SIZES = ['1ml', '5ml', '10ml']
 
 export default function ProductFilters({ onFilterChange, initialFilters = INITIAL_FILTERS }: FilterProps) {
   const [filters, setFilters] = React.useState<FilterState>(initialFilters)
@@ -66,12 +64,6 @@ export default function ProductFilters({ onFilterChange, initialFilters = INITIA
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFilters = { ...filters, search: event.target.value }
-    setFilters(newFilters)
-    onFilterChange(newFilters)
-  }
-
-  const handleInStockChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newFilters = { ...filters, inStock: event.target.checked }
     setFilters(newFilters)
     onFilterChange(newFilters)
   }
@@ -185,26 +177,6 @@ export default function ProductFilters({ onFilterChange, initialFilters = INITIA
           </AccordionDetails>
         </Accordion>
       ))}
-
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={filters.inStock}
-            onChange={handleInStockChange}
-            sx={{
-              color: '#d4d4d4',
-              padding: { xs: '6px', sm: '9px' },
-              '&.Mui-checked': {
-                color: 'black',
-              },
-            }}
-          />
-        }
-        label={<span className="text-xs sm:text-sm font-medium">In Stock Only</span>}
-        sx={{
-          marginY: { xs: 0.5, sm: 1 },
-        }}
-      />
     </div>
   )
 } 

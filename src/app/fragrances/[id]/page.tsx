@@ -5,32 +5,32 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Minus, Plus, Heart } from 'lucide-react'
 import { IconButton, Snackbar, Alert } from '@mui/material'
-import Navbar from '../../../components/Navbar'
+import Navbar from '@/components/Navbar'
 import { useCart } from '@/context/CartContext'
 
 // Mock product data - in a real app, this would come from an API or database
 const product = {
   id: 1,
-  name: 'Modern Chair',
-  brand: 'Designer Brand',
-  price: 299,
-  description: 'A sleek and comfortable modern chair perfect for any contemporary space. Features durable construction and ergonomic design.',
-  category: 'Furniture',
-  size: 'One Size',
+  name: 'Aventus',
+  brand: 'Creed',
+  price: 435,
+  description: 'A masterpiece of perfumery featuring pineapple, birch, ambergris, and black currant notes. A timeless fragrance that embodies confidence and success.',
+  category: 'Fruity & Rich',
+  size: '10ml',
   images: [
-    '/products/chair.jpg',
-    '/products/chair-2.jpg',
-    '/products/chair-3.jpg',
+    'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1592914610354-fd354ea45e48?w=800&auto=format&fit=crop&q=80',
   ],
   features: [
-    'Ergonomic design',
-    'High-quality materials',
-    'Easy assembly',
-    'Durable construction',
+    'Top notes of pineapple and bergamot',
+    'Heart notes of birch and patchouli',
+    'Base notes of ambergris and vanilla',
+    'Long-lasting performance',
   ],
 }
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+export default function FragrancePage({ params }: { params: { id: string } }) {
   const [quantity, setQuantity] = React.useState(1)
   const [isWishlisted, setIsWishlisted] = React.useState(false)
   const [showSnackbar, setShowSnackbar] = React.useState(false)
@@ -72,9 +72,9 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       <Navbar />
       
       <div className="max-w-7xl mx-auto px-4 py-24">
-        <Link href="/products" className="inline-flex items-center gap-2 text-gray-600 hover:text-black mb-8">
+        <Link href="/fragrances" className="inline-flex items-center gap-2 text-gray-600 hover:text-black mb-8">
           <ArrowLeft className="h-4 w-4" />
-          Back to Products
+          Back to Fragrances
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -106,6 +106,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           {/* Product Info */}
           <div className="space-y-8">
             <div>
+              <p className="text-zinc-500 mb-2">{product.brand}</p>
               <h1 className="text-3xl font-semibold mb-2">{product.name}</h1>
               <p className="text-2xl">${product.price}</p>
             </div>
@@ -113,7 +114,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             <p className="text-gray-600">{product.description}</p>
 
             <div>
-              <h3 className="font-medium mb-4">Features</h3>
+              <h3 className="font-medium mb-4">Notes</h3>
               <ul className="list-disc list-inside space-y-2 text-gray-600">
                 {product.features.map((feature, index) => (
                   <li key={index}>{feature}</li>
