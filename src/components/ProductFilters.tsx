@@ -1,19 +1,6 @@
 'use client'
 
 import React from 'react'
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Slider,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  TextField,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
-import { ExpandMore } from '@mui/icons-material'
 
 interface FilterProps {
   onFilterChange: (filters: FilterState) => void
@@ -21,43 +8,39 @@ interface FilterProps {
 }
 
 interface FilterState {
-  priceRange: [number, number]
   brands: string[]
   categories: string[]
-  sizes: string[]
   search: string
 }
 
 const INITIAL_FILTERS: FilterState = {
-  priceRange: [0, 500],
   brands: [],
   categories: [],
-  sizes: [],
   search: '',
 }
 
-const BRANDS = ['Tom Ford', 'Creed', 'Le Labo', 'Maison Francis Kurkdjian', 'Byredo']
-const CATEGORIES = ['Niche', 'Designer', 'Vintage', 'Limited Edition']
-const SIZES = ['1ml', '5ml', '10ml']
+const BRANDS = ['Creed', 'Tom Ford', 'Maison Francis Kurkdjian', 'Parfums de Marly', 'Initio', 'Xerjoff']
+
+const CATEGORIES = {
+  Spring: ['Fresh & Clean', 'Floral & Light', 'Citrus Fresh'],
+  Summer: ['Aquatic Fresh', 'Citrus & Light', 'Fresh Spicy'],
+  Fall: ['Woody & Spicy', 'Oriental & Spicy', 'Sweet & Amber'],
+  Winter: ['Warm & Spicy', 'Oriental Rich', 'Sweet & Intense']
+}
 
 export default function ProductFilters({ onFilterChange, initialFilters = INITIAL_FILTERS }: FilterProps) {
   const [filters, setFilters] = React.useState<FilterState>(initialFilters)
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
 
-  const handlePriceChange = (event: Event, newValue: number | number[]) => {
-    const newFilters = { ...filters, priceRange: newValue as [number, number] }
-    setFilters(newFilters)
-    onFilterChange(newFilters)
-  }
-
-  const handleCheckboxChange = (category: keyof FilterState) => (value: string) => {
-    const currentValues = filters[category] as string[]
+  const handleCheckboxChange = (type: 'brands' | 'categories', value: string) => {
+    const currentValues = filters[type]
     const newValues = currentValues.includes(value)
       ? currentValues.filter(v => v !== value)
       : [...currentValues, value]
-    
-    const newFilters = { ...filters, [category]: newValues }
+
+    const newFilters = {
+      ...filters,
+      [type]: newValues
+    }
     setFilters(newFilters)
     onFilterChange(newFilters)
   }
@@ -69,114 +52,59 @@ export default function ProductFilters({ onFilterChange, initialFilters = INITIA
   }
 
   return (
-    <div className="space-y-4">
-      <TextField
-        fullWidth
-        variant="outlined"
-        placeholder="Search fragrances..."
-        value={filters.search}
-        onChange={handleSearchChange}
-        size="small"
-        className="mb-6"
-      />
+    <div className="space-y-6 sm:space-y-8">
+      {/* Search */}
+      <div>
+        <h3 className="text-sm font-medium mb-3 sm:mb-4">Search</h3>
+        <input
+          type="text"
+          placeholder="Search fragrances..."
+          value={filters.search}
+          onChange={handleSearchChange}
+          className="w-full px-3 py-2 text-sm border border-zinc-200 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent"
+        />
+      </div>
 
-      <Accordion 
-        defaultExpanded={!isMobile} 
-        className="shadow-none border border-zinc-200"
-        TransitionProps={{ unmountOnExit: true }}
-      >
-        <AccordionSummary 
-          expandIcon={<ExpandMore />}
-          sx={{
-            minHeight: { xs: 48, sm: 56 },
-            '& .MuiAccordionSummary-content': {
-              margin: { xs: '12px 0', sm: '14px 0' },
-            },
-          }}
-        >
-          <span className="font-medium text-sm sm:text-base">Price Range</span>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Slider
-            value={filters.priceRange}
-            onChange={handlePriceChange}
-            valueLabelDisplay="auto"
-            min={0}
-            max={500}
-            sx={{
-              color: 'black',
-              '& .MuiSlider-thumb': {
-                backgroundColor: 'black',
-                width: { xs: 20, sm: 24 },
-                height: { xs: 20, sm: 24 },
-              },
-              '& .MuiSlider-track': {
-                backgroundColor: 'black',
-                height: 2,
-              },
-              '& .MuiSlider-rail': {
-                backgroundColor: '#d4d4d4',
-                height: 2,
-              },
-            }}
-          />
-          <div className="flex justify-between text-xs sm:text-sm text-zinc-600">
-            <span>${filters.priceRange[0]}</span>
-            <span>${filters.priceRange[1]}</span>
-          </div>
-        </AccordionDetails>
-      </Accordion>
+      {/* Brands */}
+      <div>
+        <h3 className="text-sm font-medium mb-3 sm:mb-4">Brands</h3>
+        <div className="space-y-2">
+          {BRANDS.map(brand => (
+            <label key={brand} className="flex items-center">
+              <input
+                type="checkbox"
+                checked={filters.brands.includes(brand)}
+                onChange={() => handleCheckboxChange('brands', brand)}
+                className="w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+              />
+              <span className="ml-2 text-sm text-zinc-600">{brand}</span>
+            </label>
+          ))}
+        </div>
+      </div>
 
-      {[
-        { title: 'Brands', items: BRANDS, key: 'brands' as const },
-        { title: 'Categories', items: CATEGORIES, key: 'categories' as const },
-        { title: 'Sizes', items: SIZES, key: 'sizes' as const },
-      ].map((section) => (
-        <Accordion
-          key={section.key}
-          defaultExpanded={!isMobile}
-          className="shadow-none border border-zinc-200"
-          TransitionProps={{ unmountOnExit: true }}
-        >
-          <AccordionSummary 
-            expandIcon={<ExpandMore />}
-            sx={{
-              minHeight: { xs: 48, sm: 56 },
-              '& .MuiAccordionSummary-content': {
-                margin: { xs: '12px 0', sm: '14px 0' },
-              },
-            }}
-          >
-            <span className="font-medium text-sm sm:text-base">{section.title}</span>
-          </AccordionSummary>
-          <AccordionDetails>
-            <FormGroup>
-              {section.items.map((item) => (
-                <FormControlLabel
-                  key={item}
-                  control={
-                    <Checkbox
-                      checked={filters[section.key].includes(item)}
-                      onChange={() => handleCheckboxChange(section.key)(item)}
-                      sx={{
-                        color: '#d4d4d4',
-                        padding: { xs: '6px', sm: '9px' },
-                        '&.Mui-checked': {
-                          color: 'black',
-                        },
-                      }}
-                    />
-                  }
-                  label={<span className="text-xs sm:text-sm">{item}</span>}
-                  sx={{
-                    marginY: { xs: 0.5, sm: 1 },
-                  }}
-                />
+      {/* Categories */}
+      <div>
+        <h3 className="text-sm font-medium mb-3 sm:mb-4">Categories</h3>
+        <div className="space-y-4 sm:space-y-6">
+          {Object.entries(CATEGORIES).map(([season, categories]) => (
+            <div key={season} className="space-y-2">
+              <h4 className="text-sm font-medium text-zinc-800">{season}</h4>
+              {categories.map(category => (
+                <label key={category} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={filters.categories.includes(category)}
+                    onChange={() => handleCheckboxChange('categories', category)}
+                    className="w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                  />
+                  <span className="ml-2 text-sm text-zinc-600 leading-tight">{category}</span>
+                </label>
               ))}
-            </FormGroup>
-          </AccordionDetails>
-        </Accordion>
-      ))}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 } 

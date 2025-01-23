@@ -4,102 +4,111 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
-import { Filter } from 'lucide-react'
+import { Filter, X } from 'lucide-react'
 import { Button, Drawer } from '@mui/material'
 import ProductFilters from '@/components/ProductFilters'
 import ProductSort, { SortOption } from '@/components/ProductSort'
 
+type Size = '1ml' | '5ml' | '10ml'
+
+interface Fragrance {
+  id: number
+  name: string
+  brand: string
+  prices: Record<Size, number>
+  description: string
+  image: string
+  category: string
+}
+
 interface FilterState {
-  priceRange: [number, number]
   brands: string[]
   categories: string[]
-  sizes: string[]
   search: string
 }
 
-const products = [
+const fragrances: Fragrance[] = [
   {
     id: 1,
     name: 'Aventus',
     brand: 'Creed',
-    price: 435,
-    size: '10ml',
-    category: 'Fruity & Rich',
-    description: 'Pineapple, Birch, Ambergris, Black Currant',
-    image: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=800&auto=format&fit=crop&q=80',
-    stock: 10,
-    featured: true,
+    prices: {
+      '1ml': 12.99,
+      '5ml': 49.99,
+      '10ml': 89.99
+    },
+    description: 'A timeless blend of fruity and woody notes',
+    image: '/products/cologne1.jpg',
+    category: 'Fruity & Rich'
   },
   {
     id: 2,
     name: 'Oud Wood',
     brand: 'Tom Ford',
-    price: 399,
-    size: '5ml',
-    category: 'Woody & Spicy',
-    description: 'Rare Oud Wood, Sandalwood, Chinese Pepper',
-    image: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=800&auto=format&fit=crop&q=80',
-    stock: 5,
-    featured: false,
+    prices: {
+      '1ml': 11.99,
+      '5ml': 45.99,
+      '10ml': 85.99
+    },
+    description: 'Rare, exotic, distinctive',
+    image: '/products/cologne2.jpg',
+    category: 'Woody & Spicy'
   },
   {
     id: 3,
     name: 'Baccarat Rouge 540',
     brand: 'Maison Francis Kurkdjian',
-    price: 495,
-    size: '1ml',
-    category: 'Sweet & Amber',
-    description: 'Saffron, Jasmine, Cedar, Ambergris',
-    image: 'https://images.unsplash.com/photo-1592914610354-fd354ea45e48?w=800&auto=format&fit=crop&q=80',
-    stock: 8,
-    featured: true,
+    prices: {
+      '1ml': 13.99,
+      '5ml': 52.99,
+      '10ml': 95.99
+    },
+    description: 'A masterful blend of jasmine and woody notes',
+    image: '/products/cologne3.jpg',
+    category: 'Sweet & Amber'
   }
 ]
 
+const SIZES: Size[] = ['1ml', '5ml', '10ml']
+
 export default function FragrancesPage() {
-  const [filteredProducts, setFilteredProducts] = React.useState(products)
+  const [selectedSizes, setSelectedSizes] = React.useState<Record<number, Size>>({})
+  const [filteredProducts, setFilteredProducts] = React.useState(fragrances)
   const [currentSort, setCurrentSort] = React.useState<SortOption>('featured')
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = React.useState(false)
 
+  const handleSizeSelect = (fragranceId: number, size: Size) => {
+    setSelectedSizes(prev => ({
+      ...prev,
+      [fragranceId]: size
+    }))
+  }
+
   const handleFilterChange = (filters: FilterState) => {
-    let result = [...products]
+    let result = [...fragrances]
 
     // Apply search filter
     if (filters.search) {
       const searchTerm = filters.search.toLowerCase()
       result = result.filter(
-        product =>
-          product.name.toLowerCase().includes(searchTerm) ||
-          product.brand.toLowerCase().includes(searchTerm) ||
-          product.description.toLowerCase().includes(searchTerm)
+        fragrance =>
+          fragrance.name.toLowerCase().includes(searchTerm) ||
+          fragrance.brand.toLowerCase().includes(searchTerm) ||
+          fragrance.description.toLowerCase().includes(searchTerm)
       )
     }
 
-    // Apply price range filter
-    result = result.filter(
-      product =>
-        product.price >= filters.priceRange[0] &&
-        product.price <= filters.priceRange[1]
-    )
-
     // Apply brand filter
     if (filters.brands.length > 0) {
-      result = result.filter(product =>
-        filters.brands.includes(product.brand)
+      result = result.filter(fragrance =>
+        filters.brands.includes(fragrance.brand)
       )
     }
 
     // Apply category filter
     if (filters.categories.length > 0) {
-      result = result.filter(product =>
-        filters.categories.includes(product.category)
-      )
-    }
-
-    // Apply size filter
-    if (filters.sizes.length > 0) {
-      result = result.filter(product =>
-        filters.sizes.includes(product.size)
+      result = result.filter(fragrance =>
+        filters.categories.includes(fragrance.category)
       )
     }
 
@@ -114,12 +123,12 @@ export default function FragrancesPage() {
     setFilteredProducts(prev => sortProducts([...prev], sort))
   }
 
-  const sortProducts = (products: typeof filteredProducts, sort: SortOption) => {
+  const sortProducts = (products: typeof fragrances, sort: SortOption) => {
     switch (sort) {
       case 'price-asc':
-        return products.sort((a, b) => a.price - b.price)
+        return products.sort((a, b) => a.prices['1ml'] - b.prices['1ml'])
       case 'price-desc':
-        return products.sort((a, b) => b.price - a.price)
+        return products.sort((a, b) => b.prices['1ml'] - a.prices['1ml'])
       case 'name-asc':
         return products.sort((a, b) => a.name.localeCompare(b.name))
       case 'name-desc':
@@ -127,31 +136,39 @@ export default function FragrancesPage() {
       case 'newest':
         return products // In a real app, we'd sort by createdAt
       default: // 'featured'
-        return products.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
+        return products
     }
   }
 
   return (
-    <main>
+    <main className="bg-[#fafafa]">
       <Navbar />
       
-      <div className="max-w-7xl mx-auto px-4 py-24">
-        <div className="flex items-center justify-between mb-12">
-          <div>
-            <h1 className="text-3xl font-light mb-2">Our Fragrances</h1>
-            <p className="text-zinc-500">Discover our curated collection of luxury fragrances</p>
-          </div>
-          
+      {/* Hero Section */}
+      <section className="relative pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 bg-zinc-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl sm:text-5xl font-light mb-4 sm:mb-6 text-white">Our Fragrances</h1>
+          <p className="text-lg sm:text-xl text-zinc-300 max-w-2xl">
+            Explore our collection of premium fragrance decants
+          </p>
+        </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="flex items-center justify-between mb-8 sm:mb-12">
           {/* Mobile Filter Button */}
-          <div className="lg:hidden flex items-center gap-4">
+          <div className="lg:hidden">
             <Button
               onClick={() => setIsFilterDrawerOpen(true)}
               startIcon={<Filter className="h-4 w-4" />}
+              variant="outlined"
               sx={{
-                color: 'black',
+                color: 'rgb(24, 24, 27)',
                 borderColor: 'rgb(228, 228, 231)',
+                textTransform: 'none',
+                fontSize: '0.875rem',
                 '&:hover': {
-                  borderColor: 'black',
+                  borderColor: 'rgb(24, 24, 27)',
                   backgroundColor: 'rgb(244, 244, 245)',
                 },
               }}
@@ -177,40 +194,74 @@ export default function FragrancesPage() {
 
           {/* Products Grid */}
           <div className="flex-1">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-              {filteredProducts.map((product) => (
-                <Link key={product.id} href={`/fragrances/${product.id}`} className="group">
-                  <div className="aspect-square bg-zinc-50 relative mb-4 overflow-hidden rounded-lg">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
+              {filteredProducts.map((fragrance) => (
+                <div key={fragrance.id} className="bg-white p-4 sm:p-6 lg:p-8 group">
+                  <div className="relative aspect-square mb-6 sm:mb-8 bg-zinc-100 overflow-hidden">
                     <Image
-                      src={product.image}
-                      alt={product.name}
+                      src={fragrance.image}
+                      alt={fragrance.name}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                    {product.stock === 0 && (
-                      <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
-                        <span className="text-sm font-medium text-zinc-900">Out of Stock</span>
-                      </div>
-                    )}
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-sm text-zinc-500">{product.brand}</p>
-                    <h3 className="font-medium group-hover:text-zinc-600 transition-colors">
-                      {product.name}
-                    </h3>
-                    <p className="text-sm text-zinc-600">{product.description}</p>
-                    <div className="flex justify-between items-center pt-2">
-                      <p className="font-medium">${product.price}</p>
-                      <p className="text-sm text-zinc-500">{product.size}</p>
+                  <div className="mb-4">
+                    <h3 className="text-sm text-zinc-600 mb-1">{fragrance.brand}</h3>
+                    <h2 className="text-xl sm:text-2xl font-light">{fragrance.name}</h2>
+                  </div>
+                  <p className="text-zinc-600 mb-6">{fragrance.description}</p>
+                  
+                  {/* Size Selection */}
+                  <div className="space-y-4">
+                    <div className="flex gap-2">
+                      {SIZES.map((size) => (
+                        <button
+                          key={size}
+                          onClick={() => handleSizeSelect(fragrance.id, size)}
+                          className={`flex-1 py-2 px-2 sm:px-4 border text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 ${
+                            selectedSizes[fragrance.id] === size
+                              ? 'border-zinc-900 bg-zinc-900 text-white'
+                              : 'border-zinc-200 hover:border-zinc-900'
+                          }`}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div className="text-base sm:text-lg font-medium">
+                        ${selectedSizes[fragrance.id] 
+                          ? fragrance.prices[selectedSizes[fragrance.id]]
+                          : fragrance.prices['1ml']}
+                      </div>
+                      {selectedSizes[fragrance.id] && (
+                        <button 
+                          className="text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
+                          onClick={() => {
+                            const newSizes = { ...selectedSizes }
+                            delete newSizes[fragrance.id]
+                            setSelectedSizes(newSizes)
+                          }}
+                        >
+                          Reset
+                        </button>
+                      )}
                     </div>
                   </div>
-                </Link>
+
+                  <Link 
+                    href={`/fragrances/${fragrance.id}`}
+                    className="inline-block mt-6 text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
+                  >
+                    VIEW DETAILS →
+                  </Link>
+                </div>
               ))}
             </div>
 
             {/* Empty State */}
             {filteredProducts.length === 0 && (
-              <div className="text-center py-12">
+              <div className="text-center py-8 sm:py-12">
                 <p className="text-zinc-600">No products found matching your criteria.</p>
               </div>
             )}
@@ -226,20 +277,50 @@ export default function FragrancesPage() {
             sx: {
               width: '100%',
               maxWidth: '320px',
-              px: 2,
-              py: 3,
+              backgroundColor: '#fafafa',
             },
           }}
+          SlideProps={{
+            timeout: 300,
+          }}
         >
-          <div className="space-y-6">
-            <h2 className="text-lg font-medium">Filters</h2>
-            <ProductFilters onFilterChange={handleFilterChange} />
-            <div className="mt-6 border-t pt-6">
-              <h2 className="text-lg font-medium mb-4">Sort By</h2>
-              <ProductSort
-                currentSort={currentSort}
-                onSortChange={handleSortChange}
-              />
+          <div className="min-h-screen flex flex-col">
+            {/* Drawer Header */}
+            <div className="sticky top-0 bg-white border-b border-zinc-200 px-4 py-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-medium text-zinc-900">Filters</h2>
+                <button
+                  onClick={() => setIsFilterDrawerOpen(false)}
+                  className="p-2 -mr-2 text-zinc-500 hover:text-zinc-700 transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Drawer Content */}
+            <div className="flex-1 overflow-y-auto px-4 py-6">
+              <ProductFilters onFilterChange={handleFilterChange} />
+              <div className="mt-8 pt-8 border-t border-zinc-200">
+                <h2 className="text-lg font-medium mb-4 text-zinc-900">Sort By</h2>
+                <ProductSort
+                  currentSort={currentSort}
+                  onSortChange={(sort) => {
+                    handleSortChange(sort);
+                    setIsFilterDrawerOpen(false);
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Drawer Footer */}
+            <div className="sticky bottom-0 bg-white border-t border-zinc-200 p-4">
+              <button
+                onClick={() => setIsFilterDrawerOpen(false)}
+                className="w-full bg-zinc-900 text-white py-2.5 px-4 text-sm font-medium hover:bg-zinc-800 transition-colors"
+              >
+                View Results
+              </button>
             </div>
           </div>
         </Drawer>
