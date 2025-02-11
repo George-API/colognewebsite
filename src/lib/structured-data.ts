@@ -1,25 +1,31 @@
 import { Product } from '@prisma/client'
 import { siteConfig } from './metadata'
 
-export function generateProductJsonLd(product: Product) {
+interface Product {
+  id: number
+  name: string
+  brand: string
+  description: string
+  image: string
+  prices: Record<string, number>
+}
+
+export function generateProductStructuredData(product: Product) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
     description: product.description,
-    image: product.images[0],
     brand: {
       '@type': 'Brand',
       name: product.brand,
     },
+    image: product.image,
     offers: {
-      '@type': 'Offer',
-      price: product.price,
+      '@type': 'AggregateOffer',
       priceCurrency: 'USD',
-      availability: product.stock > 0 
-        ? 'https://schema.org/InStock' 
-        : 'https://schema.org/OutOfStock',
-      url: `${siteConfig.url}/fragrances/${product.id}`,
+      lowPrice: Math.min(...Object.values(product.prices)),
+      highPrice: Math.max(...Object.values(product.prices)),
     },
   }
 }

@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
+import { fragrances } from '@/data/fragrances'
 
 export async function GET(request: Request) {
   try {
@@ -8,24 +8,22 @@ export async function GET(request: Request) {
     const category = searchParams.get('category')
     const brand = searchParams.get('brand')
 
-    const where = {
-      ...(featured && { featured: true }),
-      ...(category && { category }),
-      ...(brand && { brand }),
+    let filteredProducts = [...fragrances]
+
+    if (category) {
+      filteredProducts = filteredProducts.filter(p => p.category === category)
     }
 
-    const products = await prisma.product.findMany({
-      where,
-      include: {
-        reviews: {
-          select: {
-            rating: true,
-          },
-        },
-      },
-    })
+    if (brand) {
+      filteredProducts = filteredProducts.filter(p => p.brand === brand)
+    }
 
-    return NextResponse.json(products)
+    // For now, we'll consider all products as featured
+    if (featured) {
+      filteredProducts = filteredProducts.slice(0, 8)
+    }
+
+    return NextResponse.json(filteredProducts)
   } catch (error) {
     console.error('Products fetch error:', error)
     return NextResponse.json(
