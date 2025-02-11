@@ -32,8 +32,6 @@ interface FilterState {
   search: string
 }
 
-const CATEGORIES = ['All', 'Niche', 'Designer', 'Vintage', 'Limited Edition']
-
 const fragrances: Fragrance[] = [
   {
     id: 1,
