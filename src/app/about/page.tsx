@@ -30,7 +30,7 @@ export default function AboutPage() {
                 accessible price points.
               </p>
               <p className="text-lg text-zinc-600 leading-relaxed">
-                Whether you're looking to try something new, need a travel-sized option, or want to build a diverse 
+                Whether you&apos;re looking to try something new, need a travel-sized option, or want to build a diverse 
                 collection without the full-bottle commitment, our carefully measured decants provide the perfect solution.
               </p>
             </div>

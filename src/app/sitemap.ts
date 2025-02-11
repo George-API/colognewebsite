@@ -1,41 +1,24 @@
 import { MetadataRoute } from 'next'
-import { prisma } from '@/lib/prisma'
-import { siteConfig } from '@/lib/metadata'
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Get all products
-  const products = await prisma.product.findMany({
-    select: {
-      id: true,
-      updatedAt: true,
-    },
-  })
+export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = process.env.VERCEL_URL 
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000'
 
   // Static routes
   const routes = [
     '',
-    '/products',
+    '/fragrances',
     '/about',
-    '/contact',
-    '/faq',
-    '/shipping',
-    '/returns',
-    '/privacy',
-    '/terms',
+    '/cart',
+    '/checkout',
+    '/order-confirmation',
   ].map((route) => ({
-    url: `${siteConfig.url}${route}`,
+    url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
     changeFrequency: 'daily' as const,
     priority: route === '' ? 1 : 0.8,
   }))
 
-  // Dynamic product routes
-  const productRoutes = products.map((product) => ({
-    url: `${siteConfig.url}/fragrances/${product.id}`,
-    lastModified: product.updatedAt.toISOString(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
-  }))
-
-  return [...routes, ...productRoutes]
+  return routes
 } 

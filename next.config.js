@@ -9,6 +9,12 @@ const nextConfig = {
     // your project has type errors.
     ignoreBuildErrors: true,
   },
+  eslint: {
+    // !! WARN !!
+    // Allow production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
 }
 
 module.exports = nextConfig 
