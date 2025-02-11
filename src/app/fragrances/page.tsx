@@ -32,13 +32,7 @@ interface FilterState {
   search: string
 }
 
-// Define our seasonal categories
-const SEASONAL_CATEGORIES = {
-  Spring: ['Fresh & Clean', 'Floral & Light', 'Citrus Fresh'],
-  Summer: ['Aquatic Fresh', 'Citrus & Light', 'Fresh Spicy'],
-  Fall: ['Woody & Spicy', 'Oriental & Spicy', 'Sweet & Amber'],
-  Winter: ['Warm & Spicy', 'Oriental Rich', 'Sweet & Intense']
-} as const
+const CATEGORIES = ['All', 'Niche', 'Designer', 'Vintage', 'Limited Edition']
 
 const fragrances: Fragrance[] = [
   {

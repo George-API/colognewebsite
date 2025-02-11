@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server'
-import type { PaymentRequest } from '@square/web-payments-sdk-types'
 
 // Add headers to allow Square domains
-export async function OPTIONS(_request: Request) {
+export async function OPTIONS() {
   return new NextResponse(null, {
     headers: {
       'Access-Control-Allow-Origin': '*',

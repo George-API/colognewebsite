@@ -30,7 +30,7 @@ const product = {
   ],
 }
 
-export default function FragrancePage({ params }: { params: { id: string } }) {
+export default async function FragrancePage({ params: { id } }: { params: { id: string } }) {
   const [quantity, setQuantity] = React.useState(1)
   const [isWishlisted, setIsWishlisted] = React.useState(false)
   const [showSnackbar, setShowSnackbar] = React.useState(false)

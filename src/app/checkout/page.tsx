@@ -6,7 +6,6 @@ import {
   Step,
   StepLabel,
   Paper,
-  Button,
   Typography,
   Box,
   useMediaQuery,
