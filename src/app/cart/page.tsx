@@ -7,9 +7,11 @@ import { Minus, Plus, X } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import { useCart } from '../../context/CartContext'
 import { Button, IconButton, Tooltip } from '@mui/material'
+import { useRouter } from 'next/navigation'
 
 export default function CartPage() {
   const { state: cartState, dispatch } = useCart()
+  const router = useRouter()
 
   const handleUpdateQuantity = (id: number, newQuantity: number) => {
     if (newQuantity < 1) return
@@ -29,8 +31,8 @@ export default function CartPage() {
   }
 
   const handleCheckout = () => {
-    // You could add additional validation here
-    window.location.href = '/checkout'
+    if (cartState.items.length === 0) return
+    router.push('/checkout')
   }
 
   return (
@@ -57,7 +59,7 @@ export default function CartPage() {
               <div className="space-y-8">
                 {cartState.items.map((item) => (
                   <div key={item.id} className="flex gap-6 py-6 border-b">
-                    <Link href={`/products/${item.id}`} className="relative aspect-square w-24 bg-zinc-50">
+                    <Link href={`/fragrances/${item.id}`} className="relative aspect-square w-24 bg-zinc-50">
                       <Image
                         src={item.image}
                         alt={item.name}
@@ -70,7 +72,7 @@ export default function CartPage() {
                       <div className="flex justify-between">
                         <div>
                           <Link 
-                            href={`/products/${item.id}`} 
+                            href={`/fragrances/${item.id}`} 
                             className="font-medium hover:text-zinc-600 transition-colors"
                           >
                             {item.name}
@@ -160,7 +162,7 @@ export default function CartPage() {
               </Button>
 
               <Link 
-                href="/products" 
+                href="/fragrances" 
                 className="block text-center text-sm text-zinc-600 hover:text-zinc-900 mt-4 transition-colors"
               >
                 Continue Shopping

@@ -1,52 +1,74 @@
 'use client'
 
 import React from 'react'
-
-interface FilterProps {
-  onFilterChange: (filters: FilterState) => void
-  initialFilters?: FilterState
-}
+import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material'
+import { ChevronDown } from 'lucide-react'
 
 interface FilterState {
   brands: string[]
   categories: string[]
+  seasons: string[]
+  subcategories: string[]
   search: string
 }
 
-const INITIAL_FILTERS: FilterState = {
-  brands: [],
-  categories: [],
-  search: '',
+interface Props {
+  onFilterChange: (filters: FilterState) => void
 }
 
-const BRANDS = ['Creed', 'Tom Ford', 'Maison Francis Kurkdjian', 'Parfums de Marly', 'Initio', 'Xerjoff']
+const BRANDS = [
+  'Amouage',
+  'Bond No. 9',
+  'Byredo',
+  'Commodity',
+  'D.S. & Durga',
+  'Giardini Di Toscana',
+  'Initio',
+  'Kilian',
+  'Le Labo',
+  'M. Micallef',
+  'Maison Margiela',
+  'Orto Parisi',
+  'Parfums De Marly',
+  'Penhaligon\'s',
+  'Tom Ford',
+  'Xerjoff'
+]
 
-const CATEGORIES = {
+const CATEGORIES = ['Niche', 'Designer', 'Luxury']
+
+const SEASONAL_CATEGORIES = {
   Spring: ['Fresh & Clean', 'Floral & Light', 'Citrus Fresh'],
   Summer: ['Aquatic Fresh', 'Citrus & Light', 'Fresh Spicy'],
   Fall: ['Woody & Spicy', 'Oriental & Spicy', 'Sweet & Amber'],
   Winter: ['Warm & Spicy', 'Oriental Rich', 'Sweet & Intense']
-}
+} as const
 
-export default function ProductFilters({ onFilterChange, initialFilters = INITIAL_FILTERS }: FilterProps) {
-  const [filters, setFilters] = React.useState<FilterState>(initialFilters)
+export default function ProductFilters({ onFilterChange }: Props) {
+  const [filters, setFilters] = React.useState<FilterState>({
+    brands: [],
+    categories: [],
+    seasons: [],
+    subcategories: [],
+    search: ''
+  })
 
-  const handleCheckboxChange = (type: 'brands' | 'categories', value: string) => {
-    const currentValues = filters[type]
-    const newValues = currentValues.includes(value)
-      ? currentValues.filter(v => v !== value)
-      : [...currentValues, value]
-
-    const newFilters = {
-      ...filters,
-      [type]: newValues
+  const handleFilterChange = (type: keyof FilterState, value: string) => {
+    const newFilters = { ...filters }
+    
+    if (type === 'search') {
+      newFilters.search = value
+    } else {
+      const array = newFilters[type] as string[]
+      const index = array.indexOf(value)
+      
+      if (index === -1) {
+        array.push(value)
+      } else {
+        array.splice(index, 1)
+      }
     }
-    setFilters(newFilters)
-    onFilterChange(newFilters)
-  }
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newFilters = { ...filters, search: event.target.value }
+    
     setFilters(newFilters)
     onFilterChange(newFilters)
   }
@@ -59,52 +81,101 @@ export default function ProductFilters({ onFilterChange, initialFilters = INITIA
         <input
           type="text"
           placeholder="Search fragrances..."
+          className="w-full px-3 py-2 border border-zinc-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900"
           value={filters.search}
-          onChange={handleSearchChange}
-          className="w-full px-3 py-2 text-sm border border-zinc-200 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent"
+          onChange={(e) => handleFilterChange('search', e.target.value)}
         />
       </div>
 
       {/* Brands */}
-      <div>
-        <h3 className="text-sm font-medium mb-3 sm:mb-4">Brands</h3>
-        <div className="space-y-2">
-          {BRANDS.map(brand => (
-            <label key={brand} className="flex items-center">
-              <input
-                type="checkbox"
-                checked={filters.brands.includes(brand)}
-                onChange={() => handleCheckboxChange('brands', brand)}
-                className="w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
-              />
-              <span className="ml-2 text-sm text-zinc-600">{brand}</span>
-            </label>
-          ))}
-        </div>
-      </div>
+      <Accordion defaultExpanded>
+        <AccordionSummary 
+          expandIcon={<ChevronDown className="h-5 w-5" />}
+          className="px-0"
+        >
+          <h3 className="text-sm font-medium">Brands</h3>
+        </AccordionSummary>
+        <AccordionDetails className="px-0 pt-2">
+          <div className="space-y-2">
+            {BRANDS.map((brand) => (
+              <label key={brand} className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={filters.brands.includes(brand)}
+                  onChange={() => handleFilterChange('brands', brand)}
+                  className="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                />
+                <span className="ml-2 text-sm">{brand}</span>
+              </label>
+            ))}
+          </div>
+        </AccordionDetails>
+      </Accordion>
 
       {/* Categories */}
-      <div>
-        <h3 className="text-sm font-medium mb-3 sm:mb-4">Categories</h3>
-        <div className="space-y-4 sm:space-y-6">
-          {Object.entries(CATEGORIES).map(([season, categories]) => (
-            <div key={season} className="space-y-2">
-              <h4 className="text-sm font-medium text-zinc-800">{season}</h4>
-              {categories.map(category => (
-                <label key={category} className="flex items-center">
+      <Accordion defaultExpanded>
+        <AccordionSummary 
+          expandIcon={<ChevronDown className="h-5 w-5" />}
+          className="px-0"
+        >
+          <h3 className="text-sm font-medium">Categories</h3>
+        </AccordionSummary>
+        <AccordionDetails className="px-0 pt-2">
+          <div className="space-y-2">
+            {CATEGORIES.map((category) => (
+              <label key={category} className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={filters.categories.includes(category)}
+                  onChange={() => handleFilterChange('categories', category)}
+                  className="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                />
+                <span className="ml-2 text-sm">{category}</span>
+              </label>
+            ))}
+          </div>
+        </AccordionDetails>
+      </Accordion>
+
+      {/* Seasonal Categories */}
+      <Accordion defaultExpanded>
+        <AccordionSummary 
+          expandIcon={<ChevronDown className="h-5 w-5" />}
+          className="px-0"
+        >
+          <h3 className="text-sm font-medium">Seasonal Categories</h3>
+        </AccordionSummary>
+        <AccordionDetails className="px-0 pt-2">
+          <div className="space-y-6">
+            {Object.entries(SEASONAL_CATEGORIES).map(([season, subcategories]) => (
+              <div key={season} className="space-y-2">
+                <label className="flex items-center font-medium">
                   <input
                     type="checkbox"
-                    checked={filters.categories.includes(category)}
-                    onChange={() => handleCheckboxChange('categories', category)}
-                    className="w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                    checked={filters.seasons.includes(season)}
+                    onChange={() => handleFilterChange('seasons', season)}
+                    className="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
                   />
-                  <span className="ml-2 text-sm text-zinc-600 leading-tight">{category}</span>
+                  <span className="ml-2 text-sm">{season}</span>
                 </label>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
+                <div className="ml-6 space-y-2">
+                  {subcategories.map((subcategory) => (
+                    <label key={subcategory} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={filters.subcategories.includes(subcategory)}
+                        onChange={() => handleFilterChange('subcategories', subcategory)}
+                        className="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                      />
+                      <span className="ml-2 text-sm">{subcategory}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </AccordionDetails>
+      </Accordion>
     </div>
   )
 } 

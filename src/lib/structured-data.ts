@@ -19,7 +19,7 @@ export function generateProductJsonLd(product: Product) {
       availability: product.stock > 0 
         ? 'https://schema.org/InStock' 
         : 'https://schema.org/OutOfStock',
-      url: `${siteConfig.url}/products/${product.id}`,
+      url: `${siteConfig.url}/fragrances/${product.id}`,
     },
   }
 }

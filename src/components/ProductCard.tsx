@@ -24,7 +24,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   return (
-    <Link href={`/products/${product.id}`} className="group block">
+    <Link href={`/fragrances/${product.id}`} className="group block">
       <div className="aspect-square bg-zinc-50 relative mb-3 overflow-hidden">
         <Image
           src={product.images[0]}

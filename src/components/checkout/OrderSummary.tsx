@@ -48,7 +48,7 @@ export default function OrderSummary({ onNext, isMinimal = false }: OrderSummary
             <ListItemAvatar sx={{ minWidth: isMinimal ? 48 : 80 }}>
               <div className={`relative ${isMinimal ? 'w-12 h-12' : 'w-20 h-20'}`}>
                 <Image
-                  src={item.images[0]}
+                  src={item.image}
                   alt={item.name}
                   fill
                   className="object-cover rounded"
@@ -63,29 +63,44 @@ export default function OrderSummary({ onNext, isMinimal = false }: OrderSummary
                 <Typography
                   variant="body2"
                   className="font-medium line-clamp-1"
+                  component="span"
                   sx={{ mb: 0.5 }}
                 >
                   {item.name}
                 </Typography>
               }
               secondary={
-                <div className="space-y-1">
+                <Box component="span" className="space-y-1">
                   <Typography
                     variant="caption"
                     color="text.secondary"
-                    className="block"
+                    component="span"
+                    display="block"
                   >
                     {item.brand}
                   </Typography>
-                  <div className="flex justify-between items-center">
-                    <Typography variant="caption" color="text.secondary">
+                  <Box 
+                    component="span" 
+                    display="flex" 
+                    justifyContent="space-between" 
+                    alignItems="center"
+                  >
+                    <Typography 
+                      variant="caption" 
+                      color="text.secondary"
+                      component="span"
+                    >
                       Qty: {item.quantity}
                     </Typography>
-                    <Typography variant="body2" className="font-medium">
+                    <Typography 
+                      variant="body2" 
+                      className="font-medium"
+                      component="span"
+                    >
                       ${(item.price * item.quantity).toFixed(2)}
                     </Typography>
-                  </div>
-                </div>
+                  </Box>
+                </Box>
               }
             />
           </ListItem>

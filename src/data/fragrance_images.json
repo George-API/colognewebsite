@@ -1,0 +1,368 @@
+[
+  {
+    "brand": "Amouage",
+    "name": "Enclave",
+    "image_url": "https://etiket.ca/cdn/shop/files/Enclave-EDP-100ml-Amouage-Etiket_1800x1800.jpg",
+    "local_path": "/images/fragrances/amouage-enclave.jpg"
+  },
+  {
+    "brand": "Amouage",
+    "name": "Figment Man",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Amouage",
+    "name": "Interlude Man",
+    "image_url": "http://amouage.com/cdn/shop/files/INTERLUDEMAN100ML.jpg",
+    "local_path": "/images/fragrances/amouage-interlude-man.jpg"
+  },
+  {
+    "brand": "Amouage",
+    "name": "Lyric Man",
+    "image_url": "https://amouage.com/cdn/shop/files/LYRICMAN100ML.jpg",
+    "local_path": "/images/fragrances/amouage-lyric-man.jpg"
+  },
+  {
+    "brand": "Bond No. 9",
+    "name": "Bryant Park",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Bond No. 9",
+    "name": "Madison Square Park",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Byredo",
+    "name": "De Los Santos",
+    "image_url": "https://parfumexquis.com/cdn/shop/files/DelossantosByredosample.jpg",
+    "local_path": "/images/fragrances/byredo-de-los-santos.jpg"
+  },
+  {
+    "brand": "Byredo",
+    "name": "Mixed Emotions",
+    "image_url": "https://parfumexquis.com/cdn/shop/files/ByredoMixedemotions_26eedea6-42d4-4190-9bc4-7f52683a8d81.jpg",
+    "local_path": "/images/fragrances/byredo-mixed-emotions.jpg"
+  },
+  {
+    "brand": "Commodity",
+    "name": "Paper +",
+    "image_url": "https://www.sephora.com/productimages/sku/s2616076-main-hero.jpg",
+    "local_path": "/images/fragrances/commodity-paper-+.jpg"
+  },
+  {
+    "brand": "D.S. & Durga",
+    "name": "Coriander",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "D.S. & Durga",
+    "name": "Cowboy Grass",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Giardini Di Toscana",
+    "name": "Bianco Latte",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Initio",
+    "name": "Absolute Aphrodisiac",
+    "image_url": "https://parfumexquis.com/cdn/shop/files/AbsoluteAphrodisiacInitiosample.jpg",
+    "local_path": "/images/fragrances/initio-absolute-aphrodisiac.jpg"
+  },
+  {
+    "brand": "Initio",
+    "name": "Blessed Baraka",
+    "image_url": "https://fragrancebuy.ca/cdn/shop/products/blessedbarakainitio-man_grande.jpg",
+    "local_path": null
+  },
+  {
+    "brand": "Initio",
+    "name": "Oud For Greatness",
+    "image_url": "https://parfumexquis.com/cdn/shop/files/InitioOudForGreatness_2.jpg",
+    "local_path": "/images/fragrances/initio-oud-for-greatness.jpg"
+  },
+  {
+    "brand": "Initio",
+    "name": "Rehab",
+    "image_url": "https://perfumeonline.ca/cdn/shop/products/Initio-Rehab-Extrait-De-Parfum.png",
+    "local_path": "/images/fragrances/initio-rehab.png"
+  },
+  {
+    "brand": "Initio",
+    "name": "Side Effect",
+    "image_url": "http://ca.oilperfumery.com/cdn/shop/products/Initio-SideEffect_grande.jpg",
+    "local_path": "/images/fragrances/initio-side-effect.jpg"
+  },
+  {
+    "brand": "Kilian",
+    "name": "Black Phantom",
+    "image_url": "https://www.sephora.com/productimages/sku/s2320174-main-zoom.jpg",
+    "local_path": "/images/fragrances/kilian-black-phantom.jpg"
+  },
+  {
+    "brand": "Kilian",
+    "name": "L'Heure Verte",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Kilian",
+    "name": "Moonlight In Heaven",
+    "image_url": "https://www.sephora.com/productimages/sku/s2320117-main-zoom.jpg",
+    "local_path": "/images/fragrances/kilian-moonlight-in-heaven.jpg"
+  },
+  {
+    "brand": "Le Labo",
+    "name": "Santal 33",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "M. Micallef",
+    "name": "DesirToxic",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "M. Micallef",
+    "name": "EdenFalls",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "M. Micallef",
+    "name": "Osaito",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Maison Margiela",
+    "name": "Coffee Break",
+    "image_url": "https://www.sephora.com/productimages/sku/s2361038-main-zoom.jpg",
+    "local_path": "/images/fragrances/maison-margiela-coffee-break.jpg"
+  },
+  {
+    "brand": "Orto Parisi",
+    "name": "Megamare",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Parfums De Marly",
+    "name": "Carlisle",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Parfums De Marly",
+    "name": "Galloway",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Parfums De Marly",
+    "name": "Godolphin",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Parfums De Marly",
+    "name": "Greenley",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Parfums De Marly",
+    "name": "Herod",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Parfums De Marly",
+    "name": "Layton",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Parfums De Marly",
+    "name": "Layton Exclusif",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Parfums De Marly",
+    "name": "Pegasus",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Parfums De Marly",
+    "name": "Pegasus Exclusif",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Parfums De Marly",
+    "name": "Sedley",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Penhaligon's",
+    "name": "Blazing Mr. Sam",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Penhaligon's",
+    "name": "Terrible Teddy",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Bois Marocain",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Costa Azzura (PB)",
+    "image_url": "https://www.sephora.com/productimages/sku/s2408292-main-zoom.jpg",
+    "local_path": "/images/fragrances/tom-ford-costa-azzura-(pb).jpg"
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Fucking Fabulous",
+    "image_url": "https://www.sephora.com/productimages/sku/s2174274-main-zoom.jpg",
+    "local_path": "/images/fragrances/tom-ford-fucking-fabulous.jpg"
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Mandarino Di Amalfi",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Neroli Portofino",
+    "image_url": "https://www.sephora.com/productimages/sku/s1449149-main-zoom.jpg",
+    "local_path": "/images/fragrances/tom-ford-neroli-portofino.jpg"
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Noir de Noir",
+    "image_url": "https://www.sephora.com/productimages/sku/s1449214-main-zoom.jpg",
+    "local_path": "/images/fragrances/tom-ford-noir-de-noir.jpg"
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Oud Wood",
+    "image_url": "https://www.sephora.com/productimages/sku/s1565902-main-zoom.jpg",
+    "local_path": "/images/fragrances/tom-ford-oud-wood.jpg"
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Rose D'Amalfi",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Rose Prick",
+    "image_url": "https://www.sephora.com/productimages/sku/s2408326-main-zoom.jpg",
+    "local_path": "/images/fragrances/tom-ford-rose-prick.jpg"
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Tobacco Vanille",
+    "image_url": "https://www.sephora.com/productimages/sku/s2038867-main-zoom.jpg",
+    "local_path": "/images/fragrances/tom-ford-tobacco-vanille.jpg"
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Vanille Fatale",
+    "image_url": "https://www.sephora.com/productimages/sku/s2748515-main-zoom.jpg",
+    "local_path": "/images/fragrances/tom-ford-vanille-fatale.jpg"
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "White Suede",
+    "image_url": "https://www.sephora.com/contentimages/VideoImagesNEW/122719/ppage_TF_white_suede_collection_122719_video.jpg",
+    "local_path": "/images/fragrances/tom-ford-white-suede.jpg"
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "40 Knots",
+    "image_url": "https://parfumexquis.com/cdn/shop/files/40KnotsXerjoffNotes_0aa1e223-6579-4c96-bc74-813338ee2152.jpg",
+    "local_path": "/images/fragrances/xerjoff-40-knots.jpg"
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Alexandria II",
+    "image_url": "https://fragrancebuy.ca/cdn/shop/files/xerjoffalexandriaiianniversaryeditionparfum-man.jpg",
+    "local_path": null
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Decas",
+    "image_url": "https://perfumeonline.ca/cdn/shop/products/Xerjoff-1861-Decas_1024x1024.png",
+    "local_path": "/images/fragrances/xerjoff-decas.png"
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Erba Pura",
+    "image_url": null,
+    "local_path": null
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Kobe",
+    "image_url": "https://www.xerjoff.com/3553-large_default/kobeparfum-50ml.jpg",
+    "local_path": "/images/fragrances/xerjoff-kobe.jpg"
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Mamluk",
+    "image_url": "http://perfumeonline.ca/cdn/shop/products/Xerjoff-Oud-Stars-Mamluk_grande.png",
+    "local_path": "/images/fragrances/xerjoff-mamluk.png"
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "More Than Words",
+    "image_url": "http://ca.oilperfumery.com/cdn/shop/products/Xerjoff-MoreThanWords_grande.jpg",
+    "local_path": "/images/fragrances/xerjoff-more-than-words.jpg"
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Naxos",
+    "image_url": "https://perfumeonline.ca/cdn/shop/products/Xerjoff-1861-Naxos.png",
+    "local_path": "/images/fragrances/xerjoff-naxos.png"
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Renaissance",
+    "image_url": "https://perfumeonline.ca/cdn/shop/products/Xerjoff-1861-Renaissance.png",
+    "local_path": "/images/fragrances/xerjoff-renaissance.png"
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Starlight",
+    "image_url": "https://etiket.ca/cdn/shop/files/Starlight-EDP-50ml-Xerjoff-Etiket.jpg",
+    "local_path": "/images/fragrances/xerjoff-starlight.jpg"
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Zefiro",
+    "image_url": "https://perfumeonline.ca/cdn/shop/products/Xerjoff-1861-Zefiro.png",
+    "local_path": "/images/fragrances/xerjoff-zefiro.png"
+  }
+]
